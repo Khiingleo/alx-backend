@@ -37,7 +37,12 @@ class Server:
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
         """
         get a specific page of data from the dataset based
-        on the pagination parameters given
+        on the pagination parameters given.
+        Args:
+            page (int): the page index
+            page_size (int): the page size index
+        Returns:
+            List: a list of pagination parameters
         """
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
