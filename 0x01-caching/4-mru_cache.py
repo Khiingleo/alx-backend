@@ -27,7 +27,7 @@ class MRUCache(BaseCaching):
             mru = self.most_recently_used
             del self.cache_data[mru]
             print("DISCARD: {}".format(mru))
-        
+
         if key in self.cache_data:
             self.most_recently_used = key
 
