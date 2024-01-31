@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-defines a class LRUCache
+defines a class MRUCache
 """
 from base_caching import BaseCaching
 
