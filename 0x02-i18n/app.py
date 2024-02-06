@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """ Flask app """
 from flask import Flask, render_template, request, g
-from flask_babel import Babel
+from flask_babel import Babel, format_datetime
 from typing import Any, Union
 import pytz
 from pytz import timezone
+from datetime import datetime
 
 
 users = {
@@ -34,7 +35,7 @@ app.config.from_object("3-app.Config")
 @app.route('/', strict_slashes=False)
 def hello_world() -> Any:
     """ hello world output"""
-    return render_template("7-index.html")
+    return render_template("index.html")
 
 
 @babel.localeselector
@@ -73,6 +74,7 @@ def before_request() -> None:
      flask.g.user
     """
     g.user = get_user()
+    g.current_time = format_datetime(datetime.now())
 
 
 @babel.timezoneselector
@@ -86,15 +88,16 @@ def get_timezone() -> Any:
         try:
             return pytz.timezone(timezone).zone
         except pytz.exceptions.UnknownTimeZoneError:
-            pass
+            return "UTC"
     # Time zone from user profile
     elif g.user and g.user.get("timezone"):
         try:
             return pytz.timezone(g.user.get("timezone")).zone
         except pytz.exceptions.UnknownTimeZoneError:
-            return None
+            return "UTC"
 
-    return pytz.timezone(app.config["BABEL_DEFAULT_TIMEZONE"])
+    default_timezone = app.config["BABEL_DEFAULT_TIMEZONE"]
+    return request.accept_languages.best_match([default_timezone])
 
 
 if __name__ == "__main__":
