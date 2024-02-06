@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route("/", strict_slashes=False)
 def hello_world() -> Any:
-    """simple '/' route that outputs 
+    """simple '/' route that outputs
        'welcome to holberton' as a page title and
        'hello world' as a header(<h1>)
     """
